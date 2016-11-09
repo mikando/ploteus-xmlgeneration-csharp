@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://ec.europa.eu/delete/v0_1_1"
+    xmlns:tns="http://ec.europa.eu/delete/v0_1_1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+    <xsd:element name="Delete">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element minOccurs="1" maxOccurs="1" ref="tns:EntityType"/>
+				<xsd:element minOccurs="1" maxOccurs="unbounded" ref="tns:Id"/>
+            </xsd:sequence>
+            <xsd:attribute name="Key" type="xsd:string" use="required" />
+            <xsd:attribute name="XsdVersion" type="tns:XsdVersionType" use="required" />
+            <xsd:attribute name="XsdType" type="tns:XsdTypeType" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:simpleType name="XsdVersionType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="0.1.1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="EntityTypeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Learning Opportunity"/>
+			<xsd:enumeration value="Qualification"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="XsdTypeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Delete"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="NonEmptyString">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="EntityType" type="tns:EntityTypeType"/>
+    <xsd:element name="Id" type="tns:NonEmptyString"/>
+</xsd:schema>

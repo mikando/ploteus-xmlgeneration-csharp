@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ec.europa.eu/Qualifications/v0_7_10" targetNamespace="http://ec.europa.eu/Qualifications/v0_7_10" elementFormDefault="qualified">
+  <xsd:element name="Qualifications">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="tns:Qualification" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="Key" type="xsd:string" use="required"/>
+      <xsd:attribute name="XsdVersion" type="tns:XsdVersionType" use="required"/>
+      <xsd:attribute name="XsdType" type="tns:XsdTypeType" use="required"/>
+      <xsd:attribute name="DatasourceComment" type="xsd:string" use="optional"/>
+      <xsd:attribute name="Incremental" type="tns:BooleanType" use="optional" default="false"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:simpleType name="XsdVersionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="0.7.10"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="XsdTypeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Qualification"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NonEmptyString">
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="BooleanType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="true"/>
+      <xsd:enumeration value="false"/>
+      <xsd:enumeration value="0"/>
+      <xsd:enumeration value="1"/>
+      <xsd:enumeration value="null"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="NormalString">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:complexType name="i18nNonEmptyString">
+    <xsd:simpleContent>
+      <xsd:extension base="tns:NonEmptyString">
+        <xsd:attribute name="language" type="tns:LanguageCode" use="optional" default="en"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="i18nString">
+    <xsd:simpleContent>
+      <xsd:extension base="tns:NormalString">
+        <xsd:attribute name="language" type="tns:LanguageCode" use="optional" default="en"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:complexType name="i18nUrl">
+    <xsd:simpleContent>
+      <xsd:extension base="tns:customUrl">
+        <xsd:attribute name="language" type="tns:LanguageCode" use="optional" default="en"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:element name="Qualification">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="tns:QualificationId" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="tns:Title" minOccurs="1" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:NonPreferredTerms" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:Description" minOccurs="1" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:FurtherInfo" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:SourceOfFurtherInfo" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:Url" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:EQFLevel" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="tns:NQFLevel" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="tns:ThematicAreas2013" minOccurs="1" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:InformationLanguage" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="tns:AwardingBody" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:AwardingBodyContactInfo" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:AwardingBodyUrl" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:SourceOfInformation" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="tns:SupplementLink" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:NationalOccupationClassification" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:RelationshipType" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:ExpiryDate" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:AccessRequirements" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:WaysToAcquire" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="tns:CountryCode" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+    <xsd:unique name="UniqueTitle">
+      <xsd:selector xpath="tns:Title"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueNonPreferredTerms">
+      <xsd:selector xpath="tns:NonPreferredTerms"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueDescription">
+      <xsd:selector xpath="tns:Description"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueFurtherInfo">
+      <xsd:selector xpath="tns:FurtherInfo"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueSourceOfFurtherInfo">
+      <xsd:selector xpath="tns:SourceOfFurtherInfo"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueUrl">
+      <xsd:selector xpath="tns:Url"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueAwardingBody">
+      <xsd:selector xpath="tns:AwardingBody"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueAwardingBodyContactInfo">
+      <xsd:selector xpath="tns:AwardingBodyContactInfo"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueAwardingBodyUrl">
+      <xsd:selector xpath="tns:AwardingBodyUrl"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueNationalOccupationClassification">
+      <xsd:selector xpath="tns:NationalOccupationClassification"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueRelationshipType">
+      <xsd:selector xpath="tns:RelationshipType"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueExpiryDate">
+      <xsd:selector xpath="tns:ExpiryDate"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueAccessRequirements">
+      <xsd:selector xpath="tns:AccessRequirements"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+    <xsd:unique name="UniqueWaysToAcquire">
+      <xsd:selector xpath="tns:WaysToAcquire"/>
+      <xsd:field xpath="@language"/>
+    </xsd:unique>
+  </xsd:element>
+  <xsd:element name="CountryCode" type="tns:CountryCodeType"/>
+  <xsd:simpleType name="CountryCodeType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="AT"/>
+      <xsd:enumeration value="BE"/>
+      <xsd:enumeration value="BE2"/>
+      <xsd:enumeration value="BE3"/>
+      <xsd:enumeration value="BG"/>
+      <xsd:enumeration value="CH"/>
+      <xsd:enumeration value="HR"/>
+      <xsd:enumeration value="CY"/>
+      <xsd:enumeration value="CZ"/>
+      <xsd:enumeration value="DK"/>
+      <xsd:enumeration value="EE"/>
+      <xsd:enumeration value="FI"/>
+      <xsd:enumeration value="FR"/>
+      <xsd:enumeration value="DE"/>
+      <xsd:enumeration value="EL"/>
+      <xsd:enumeration value="HU"/>
+      <xsd:enumeration value="IS"/>
+      <xsd:enumeration value="IE"/>
+      <xsd:enumeration value="IT"/>
+      <xsd:enumeration value="LV"/>
+      <xsd:enumeration value="LT"/>
+      <xsd:enumeration value="LU"/>
+      <xsd:enumeration value="MT"/>
+      <xsd:enumeration value="NL"/>
+      <xsd:enumeration value="NO"/>
+      <xsd:enumeration value="PL"/>
+      <xsd:enumeration value="PT"/>
+      <xsd:enumeration value="RO"/>
+      <xsd:enumeration value="SK"/>
+      <xsd:enumeration value="SI"/>
+      <xsd:enumeration value="ES"/>
+      <xsd:enumeration value="SE"/>
+	  <xsd:enumeration value="RS"/>
+      <xsd:enumeration value="TR"/>
+      <xsd:enumeration value="UK"/>
+      <xsd:enumeration value="UKL"/>
+      <xsd:enumeration value="UK-ENI"/>
+      <xsd:enumeration value="UKM"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="Title" type="tns:i18nNonEmptyString"/>
+  <xsd:element name="QualificationId" type="tns:NonEmptyString"/>
+  <xsd:element name="NonPreferredTerms" type="tns:i18nString"/>
+  <xsd:element name="Description" type="tns:i18nNonEmptyString"/>
+  <xsd:element name="FurtherInfo" type="tns:i18nString"/>
+  <xsd:element name="SourceOfFurtherInfo" type="tns:i18nString"/>
+  <xsd:element name="Url" type="tns:i18nUrl"/>
+  <xsd:element name="EQFLevel" type="tns:EQFLevelType"/>
+  <xsd:simpleType name="EQFLevelType">
+    <xsd:restriction base="xsd:integer">
+      <xsd:enumeration value="1"/>
+      <xsd:enumeration value="2"/>
+      <xsd:enumeration value="3"/>
+      <xsd:enumeration value="4"/>
+      <xsd:enumeration value="5"/>
+      <xsd:enumeration value="6"/>
+      <xsd:enumeration value="7"/>
+      <xsd:enumeration value="8"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="NQFLevel" type="tns:NQFLevelType"/>
+  <xsd:simpleType name="NQFLevelType">
+    <xsd:restriction base="xsd:integer">
+      <xsd:enumeration value="1"/>
+      <xsd:enumeration value="2"/>
+      <xsd:enumeration value="3"/>
+      <xsd:enumeration value="4"/>
+      <xsd:enumeration value="5"/>
+      <xsd:enumeration value="6"/>
+      <xsd:enumeration value="7"/>
+      <xsd:enumeration value="8"/>
+      <xsd:enumeration value="9"/>
+      <xsd:enumeration value="10"/>
+      <xsd:enumeration value="11"/>
+      <xsd:enumeration value="12"/>
+      <xsd:enumeration value="13"/>
+      <xsd:enumeration value="14"/>
+      <xsd:enumeration value="15"/>
+      <xsd:enumeration value="16"/>
+      <xsd:enumeration value="17"/>
+      <xsd:enumeration value="18"/>
+      <xsd:enumeration value="19"/>
+      <xsd:enumeration value="20"/>
+      <xsd:enumeration value="21"/>
+      <xsd:enumeration value="22"/>
+      <xsd:enumeration value="23"/>
+      <xsd:enumeration value="24"/>
+      <xsd:enumeration value="25"/>
+      <xsd:enumeration value="26"/>
+      <xsd:enumeration value="27"/>
+      <xsd:enumeration value="28"/>
+      <xsd:enumeration value="29"/>
+      <xsd:enumeration value="30"/>
+      <xsd:enumeration value="99"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="ThematicAreas2013" type="tns:ThematicAreasType"/>
+  <xsd:simpleType name="ThematicAreasType">
+    <xsd:restriction base="xsd:string">
+		<xsd:enumeration value="001"/>
+		<xsd:enumeration value="0011"/>
+		<xsd:enumeration value="002"/>
+		<xsd:enumeration value="0021"/>
+		<xsd:enumeration value="003"/>
+		<xsd:enumeration value="0031"/>
+		<xsd:enumeration value="011"/>
+		<xsd:enumeration value="0111"/>
+		<xsd:enumeration value="0112"/>
+		<xsd:enumeration value="0113"/>
+		<xsd:enumeration value="0114"/>
+		<xsd:enumeration value="021"/>
+		<xsd:enumeration value="0211"/>
+		<xsd:enumeration value="0212"/>
+		<xsd:enumeration value="0213"/>
+		<xsd:enumeration value="0214"/>
+		<xsd:enumeration value="0215"/>
+		<xsd:enumeration value="022"/>
+		<xsd:enumeration value="0221"/>
+		<xsd:enumeration value="0222"/>
+		<xsd:enumeration value="0223"/>
+		<xsd:enumeration value="023"/>
+		<xsd:enumeration value="0231"/>
+		<xsd:enumeration value="0232"/>
+		<xsd:enumeration value="031"/>
+		<xsd:enumeration value="0311"/>
+		<xsd:enumeration value="0312"/>
+		<xsd:enumeration value="0313"/>
+		<xsd:enumeration value="0314"/>
+		<xsd:enumeration value="032"/>
+		<xsd:enumeration value="0321"/>
+		<xsd:enumeration value="0322"/>
+		<xsd:enumeration value="041"/>
+		<xsd:enumeration value="0411"/>
+		<xsd:enumeration value="0412"/>
+		<xsd:enumeration value="0413"/>
+		<xsd:enumeration value="0414"/>
+		<xsd:enumeration value="0415"/>
+		<xsd:enumeration value="0416"/>
+		<xsd:enumeration value="0417"/>
+		<xsd:enumeration value="042"/>
+		<xsd:enumeration value="0421"/>
+		<xsd:enumeration value="051"/>
+		<xsd:enumeration value="0511"/>
+		<xsd:enumeration value="0512"/>
+		<xsd:enumeration value="052"/>
+		<xsd:enumeration value="0521"/>
+		<xsd:enumeration value="0522"/>
+		<xsd:enumeration value="053"/>
+		<xsd:enumeration value="0531"/>
+		<xsd:enumeration value="0532"/>
+		<xsd:enumeration value="0533"/>
+		<xsd:enumeration value="054"/>
+		<xsd:enumeration value="0541"/>
+		<xsd:enumeration value="0542"/>
+		<xsd:enumeration value="061"/>
+		<xsd:enumeration value="0611"/>
+		<xsd:enumeration value="0612"/>
+		<xsd:enumeration value="0613"/>
+		<xsd:enumeration value="071"/>
+		<xsd:enumeration value="0711"/>
+		<xsd:enumeration value="0712"/>
+		<xsd:enumeration value="0713"/>
+		<xsd:enumeration value="0714"/>
+		<xsd:enumeration value="0715"/>
+		<xsd:enumeration value="0716"/>
+		<xsd:enumeration value="072"/>
+		<xsd:enumeration value="0721"/>
+		<xsd:enumeration value="0722"/>
+		<xsd:enumeration value="0723"/>
+		<xsd:enumeration value="0724"/>
+		<xsd:enumeration value="073"/>
+		<xsd:enumeration value="0731"/>
+		<xsd:enumeration value="0732"/>
+		<xsd:enumeration value="081"/>
+		<xsd:enumeration value="0811"/>
+		<xsd:enumeration value="0812"/>
+		<xsd:enumeration value="082"/>
+		<xsd:enumeration value="0821"/>
+		<xsd:enumeration value="083"/>
+		<xsd:enumeration value="0831"/>
+		<xsd:enumeration value="084"/>
+		<xsd:enumeration value="0841"/>
+		<xsd:enumeration value="091"/>
+		<xsd:enumeration value="0911"/>
+		<xsd:enumeration value="0912"/>
+		<xsd:enumeration value="0913"/>
+		<xsd:enumeration value="0914"/>
+		<xsd:enumeration value="0915"/>
+		<xsd:enumeration value="0916"/>
+		<xsd:enumeration value="0917"/>
+		<xsd:enumeration value="092"/>
+		<xsd:enumeration value="0921"/>
+		<xsd:enumeration value="0922"/>
+		<xsd:enumeration value="0923"/>
+		<xsd:enumeration value="101"/>
+		<xsd:enumeration value="1011"/>
+		<xsd:enumeration value="1012"/>
+		<xsd:enumeration value="1013"/>
+		<xsd:enumeration value="1014"/>
+		<xsd:enumeration value="1015"/>
+		<xsd:enumeration value="102"/>
+		<xsd:enumeration value="1021"/>
+		<xsd:enumeration value="1022"/>
+		<xsd:enumeration value="103"/>
+		<xsd:enumeration value="1031"/>
+		<xsd:enumeration value="1032"/>
+		<xsd:enumeration value="104"/>
+		<xsd:enumeration value="1041"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="InformationLanguage" type="tns:LanguageCode"/>
+  <xsd:simpleType name="LanguageCode">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="eu"/>
+      <xsd:enumeration value="bg"/>
+      <xsd:enumeration value="ca"/>
+      <xsd:enumeration value="hr"/>
+      <xsd:enumeration value="cs"/>
+      <xsd:enumeration value="da"/>
+      <xsd:enumeration value="nl"/>
+      <xsd:enumeration value="en"/>
+      <xsd:enumeration value="et"/>
+      <xsd:enumeration value="fi"/>
+      <xsd:enumeration value="fr"/>
+      <xsd:enumeration value="gl"/>
+      <xsd:enumeration value="de"/>
+      <xsd:enumeration value="el"/>
+      <xsd:enumeration value="hu"/>
+      <xsd:enumeration value="is"/>
+      <xsd:enumeration value="ga"/>
+      <xsd:enumeration value="it"/>
+      <xsd:enumeration value="lv"/>
+      <xsd:enumeration value="lt"/>
+      <xsd:enumeration value="mt"/>
+      <xsd:enumeration value="no"/>
+      <xsd:enumeration value="pl"/>
+      <xsd:enumeration value="pt"/>
+      <xsd:enumeration value="ro"/>
+      <xsd:enumeration value="ru"/>
+      <xsd:enumeration value="gd"/>
+      <xsd:enumeration value="sk"/>
+      <xsd:enumeration value="sl"/>
+      <xsd:enumeration value="es"/>
+      <xsd:enumeration value="sv"/>
+      <xsd:enumeration value="tr"/>
+      <xsd:enumeration value="cy"/>
+	  <xsd:enumeration value="sr"/>      
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:element name="AwardingBody" type="tns:i18nString"/>
+  <xsd:element name="AwardingBodyContactInfo" type="tns:i18nString"/>
+  <xsd:element name="AwardingBodyUrl" type="tns:i18nUrl"/>
+  <xsd:element name="SourceOfInformation" type="xsd:string"/>
+  <xsd:element name="SupplementLink">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="tns:SupplementLanguage" minOccurs="1" maxOccurs="1"/>
+        <xsd:element ref="tns:SupplementUrl" minOccurs="1" maxOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SupplementLanguage" type="tns:LanguageCode"/>
+  <xsd:element name="SupplementUrl" type="tns:customUrl"/>
+  <xsd:element name="NationalOccupationClassification" type="tns:i18nString"/>
+  <xsd:element name="RelationshipType" type="tns:i18nString"/>
+  <xsd:element name="ExpiryDate" type="tns:i18nString"/>
+  <xsd:element name="AccessRequirements" type="tns:i18nString"/>
+  <xsd:element name="WaysToAcquire" type="tns:i18nString"/>
+  <xsd:simpleType name="customUrl">
+    <xsd:restriction base="xsd:anyURI">
+      <xsd:pattern value="http://.*"/>
+      <xsd:pattern value="https://.*"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
